@@ -1,0 +1,6 @@
+[submodule "sites/alex/site"]
+	path = sites/alex/site
+	url = git@github.com:otherland/alex-mastery.git
+[submodule "sites/permaculture/site"]
+	path = sites/permaculture/site
+	url = git@github.com:otherland/blog_permaculture.git
