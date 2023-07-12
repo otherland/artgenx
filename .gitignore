@@ -1,5 +1,11 @@
 # created by virtualenv automatically
 # Ignore virtual environment
+.bash_history
+.bashrc
+.cache/
+.erlang.cookie
+.ipython/
+.sudo_as_admin_successful
 venv/
 **/data/
 bin/
