@@ -1,5 +1,6 @@
 # created by virtualenv automatically
 # Ignore virtual environment
+local_settings.py
 venv/
 **/data/
 bin/
