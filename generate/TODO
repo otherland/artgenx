@@ -1,0 +1,48 @@
+SPOTIFY
+	test spotify bot
+	subscribe to tunnelbear
+	check all spotify accounts login okay
+		decide which to use for streaming
+	create more listener accounts
+		buy 50 gmails
+			https://www.blackhatworld.com/seo/bizpva-selling-new-aged-gmail-pva-yahoo-hotmail-aol-edu-twitter-linkedin-facebook-accounts-in-bulk.1469817/
+		and then setup playlists on each of those listeners to make them look natural
+
+	create more artist accounts on amuse
+	get an rdp on vultr
+
+INSTAGRAM
+	Get bot working
+
+
+ARTGEN
+	Setup hugo for each site in artgen
+			Videos, charts, tables, pictures
+		Site Logo
+		Category silo
+		GAnalytics
+
+	Research how to enhance gpt with context in prompt ala chatpdf with unsupervised documents
+
+
+
+
+
+
+
+
+So i've done a bunch of stuff but basically I'm able to type 
+
+node script.mjs "../permaculture/content/posts/" "permaculture" "principles,beginners" "How can I get a permaculture design certificate"
+
+So this allows me to plug the website, topic, categories, subject in and have it produce an article
+now i jsut need to setup a git folder that automatically adds new posts to the git repo and pushes it up
+
+
+
+anyway so the post generator works really well
+all i need to do now is have a regular cron setup and set posts to draft until reviewed
+this cron should include the pipeline for enriching the articles, then publishing
+
+
+

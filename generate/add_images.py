@@ -1,0 +1,41 @@
+import re
+import os
+import glob
+from google_image_scraper import download_images
+from add_links import add_links_to_articles
+
+def add_images_to_articles(topic, image_directory, article_directory):
+    # Use glob to find all markdown files in the article_directory and its subdirectories
+    markdown_files = glob.glob(os.path.join(article_directory, '**/*.md'), recursive=True)
+
+    for file_path in markdown_files:
+        # Read the contents of the markdown file
+        with open(file_path, 'r') as file:
+            contents = file.read()
+
+        # Perform your desired modifications to the contents
+        # For example, let's convert all headings to uppercase
+        keyword_pattern = r"<!--keywords:(.*?)-->"
+        image_template = '![{}]({})'
+
+        keywords = re.findall(keyword_pattern, contents, flags=re.DOTALL)
+        print('Keywords', keywords)
+        if not keywords:
+            continue
+        image_kw_mapping = download_images(image_directory, keywords)
+        print(image_kw_mapping)
+        for key, image_path in image_kw_mapping.items():
+            replacement = image_template.format(key,image_path)
+            contents = re.sub(keyword_pattern, replacement, contents, count=1, flags=re.DOTALL)
+
+        print(contents)
+
+        # contents = add_links_to_articles(contents, topic)
+
+        # Write the modified contents back to the markdown file
+        with open(file_path, 'w') as file:
+            file.write(contents)
+
+        print(f"Modified file: {file_path}")
+
+

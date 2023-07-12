@@ -1,0 +1,31 @@
+# created by virtualenv automatically
+# Ignore virtual environment
+venv/
+**/data/
+bin/
+lib/
+static/
+# Ignore static files
+staticfiles/
+
+# Ignore media files
+media/
+
+# Ignore database files
+*.sqlite3
+
+# Ignore IDE files
+.vscode/
+.idea/
+
+# Ignore compiled Python files
+*.pyc
+__pycache__/
+
+# Ignore logs
+*.log
+
+# Ignore node_modules directories within apps
+**/node_modules/
+
+
