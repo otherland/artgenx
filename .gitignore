@@ -1,6 +1,15 @@
 # created by virtualenv automatically
 # Ignore virtual environment
+<<<<<<< HEAD
 local_settings.py
+=======
+.bash_history
+.bashrc
+.cache/
+.erlang.cookie
+.ipython/
+.sudo_as_admin_successful
+>>>>>>> 552b295feb9e49950c8b9fa8dcf7766d149ffa93
 venv/
 **/data/
 bin/
