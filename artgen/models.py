@@ -23,7 +23,3 @@ class Article(models.Model):
     def __str__(self):
         return self.query
 
-@admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('query', 'site', 'content')
-    readonly_fields = ('content',)
