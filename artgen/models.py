@@ -1,17 +1,21 @@
-
 from django.db import models
 from django.contrib import admin
 from .tasks import process_article_task
 
-class Article(models.Model):
-    SITE_CHOICES = (
-        ('site1', 'Site 1'),
-        ('site2', 'Site 2'),
-        # Add other site choices
-    )
 
+class Site(models.Model):
+    name = models.CharField(max_length=100)
+    folder_location = models.CharField(max_length=100)
+    domain = models.CharField(max_length=100, blank=True)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name or self.domain
+
+
+class Article(models.Model):
     query = models.CharField(max_length=100)
-    site = models.CharField(max_length=20, choices=SITE_CHOICES)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
 
     def save(self, *args, **kwargs):
