@@ -75,29 +75,29 @@ def returnChromeDriver():
         from pyvirtualdisplay import Display
         display = Display(visible=0, size=(1920, 1480))
         display.start()
-    chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument("--headless")
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument("--window-size=1920x1480")
-    chrome_options.add_argument("--lang=en")
-    chrome_options.add_argument("--disable-features=NetworkService")
-    chrome_options.add_argument("--disable-features=ChromeWhatsNewUI")
-    chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    options.add_argument('--no-sandbox')
+    options.add_argument('--enable-logging')
+    options.add_argument("--start-maximized")
+    options.add_argument("--disable-infobars")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--remote-debugging-port=9222")
     
     # chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
     # chrome_options.add_experimental_option('useAutomationExtension', False)
-    chrome_options.add_experimental_option('prefs', {
-        'profile.default_content_settings': {"images": 2},
-        'profile.default_content_setting_values.clipboard': 1,
-        'credentials_enable_service': False,
-        'profile': {
-            'password_manager_enabled': False,
-            'managed_default_content_settings.javascript': 1, 
-            'managed_default_content_settings.images': 2, 
-            'managed_default_content_settings.stylesheet': 2,
-        }
-    })
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+    # chrome_options.add_experimental_option('prefs', {
+    #     'profile.default_content_settings': {"images": 2},
+    #     'profile.default_content_setting_values.clipboard': 1,
+    #     'credentials_enable_service': False,
+    #     'profile': {
+    #         'password_manager_enabled': False,
+    #         'managed_default_content_settings.javascript': 1, 
+    #         'managed_default_content_settings.images': 2, 
+    #         'managed_default_content_settings.stylesheet': 2,
+    #     }
+    # })
+    driver = webdriver.Chrome(options=options)
     return driver
 
     
