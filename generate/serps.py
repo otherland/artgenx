@@ -1,25 +1,28 @@
-import os
-import json
-from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
-from selenium.webdriver.support.ui import WebDriverWait
-from bs4 import BeautifulSoup
-from selenium.webdriver.chrome.service import Service
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import sys
 import time
-from datetime import datetime
 import os.path
 import csv
-
 import os
 import json
 import asyncio
 import aiohttp
+import os
+import json
+from bs4 import BeautifulSoup
+from datetime import datetime
 from get_structure_for_webpage import get_outline
+
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.utils import read_version_from_cmd, PATTERN
+from selenium.webdriver.chrome.service import Service
+from selenium import webdriver
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+from selenium.webdriver.support.ui import WebDriverWait
+
+
 
 async def fetch_html(url):
     try:
@@ -97,7 +100,8 @@ def returnChromeDriver():
     #         'managed_default_content_settings.stylesheet': 2,
     #     }
     # })
-    driver = webdriver.Chrome(options=options)
+    # version = read_version_from_cmd("/usr/bin/google-chrome --version", PATTERN["google-chrome"])
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager(version='104.0.5112.20').install()))
     return driver
 
     
