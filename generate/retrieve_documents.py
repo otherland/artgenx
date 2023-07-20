@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 import openai
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -7,7 +8,7 @@ from fastapi.encoders import jsonable_encoder
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 
-openai.api_key = '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'
+openai.api_key = os.environ.get('OPENAI_KEY')
 
 @app.route('/query', methods=['POST'])
 def query_endpoint():

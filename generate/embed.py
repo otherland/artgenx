@@ -7,7 +7,6 @@ from langchain.vectorstores import Chroma
 import uuid
 import json
 
-
 # Define the metadata extraction function.
 def metadata_func(record: dict, metadata: dict) -> dict:
     metadata["title"] = json.dumps(record.get("title", ""))
@@ -37,8 +36,14 @@ def json_to_vectorstore(filepath):
         text_content=False
     )
     persist_directory = os.path.join(os.path.dirname(filepath), 'vector_store')
-    data = loader.load()
-    embedding_function = OpenAIEmbeddings(openai_api_key='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')
-    db2 = Chroma.from_documents(data, embedding_function, persist_directory=persist_directory)
-    db2.persist()
+
+    if os.path.exists(persist_directory):
+        print("Chroma persisted database already exists. Skipping creation.")
+    else:
+        data = loader.load()
+        embedding_function = OpenAIEmbeddings(openai_api_key=os.environ.get('OPENAI_KEY'))
+        db2 = Chroma.from_documents(data, embedding_function, persist_directory=persist_directory)
+        db2.persist()
+        print("Chroma persisted database created.")
+
     return persist_directory

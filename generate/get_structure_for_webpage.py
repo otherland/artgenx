@@ -11,7 +11,8 @@ from requests.exceptions import HTTPError
 def html_body_shorthand(html):
     # Parse HTML data
     soup = BeautifulSoup(html, 'html.parser')
-    
+    if not soup.body:
+        return ''
     # Replace <p> tags with the appropriate heading tags
     for i in range(1, 7):
         for p_tag in soup.find_all('p'):

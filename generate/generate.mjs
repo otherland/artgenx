@@ -49,7 +49,7 @@ const enrichOutline = async (outline, subject) => {
 };
 
 const prompt = {
-  apiKey: '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',
+  apiKey: process.env.OPENAI_KEY,
   topic: topic,
   enrichOutline: enrichOutline,
   serp_outlines: serp_outlines,
@@ -68,7 +68,7 @@ const prompt = {
   debugapi: true, // optional
 }
 
-console.log(prompt)
+// console.log(prompt)
 
 const postGenerator = new OpenAIPostGenerator(prompt)
 const post = await postGenerator.generate()

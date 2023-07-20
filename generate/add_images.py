@@ -4,6 +4,12 @@ import glob
 from google_image_scraper import download_images
 from add_links import add_links_to_articles
 
+def replace_references(text):
+    # Use regular expression to find and replace the references
+    updated_text = re.sub(r'\[\^(\d)\^\]', r'[^\1]', text)
+    updated_text = re.sub('**References:**', '', text)
+    return updated_text
+
 def add_images_to_articles(topic, image_directory, article_directory):
     # Use glob to find all markdown files in the article_directory and its subdirectories
     markdown_files = glob.glob(os.path.join(article_directory, '**/*.md'), recursive=True)
@@ -17,20 +23,21 @@ def add_images_to_articles(topic, image_directory, article_directory):
         # For example, let's convert all headings to uppercase
         keyword_pattern = r"<!--keywords:(.*?)-->"
         image_template = '![{}]({})'
-
         keywords = re.findall(keyword_pattern, contents, flags=re.DOTALL)
-        print('Keywords', keywords)
-        if not keywords:
-            continue
-        image_kw_mapping = download_images(image_directory, keywords)
-        print(image_kw_mapping)
-        for key, image_path in image_kw_mapping.items():
-            replacement = image_template.format(key,image_path)
-            contents = re.sub(keyword_pattern, replacement, contents, count=1, flags=re.DOTALL)
 
-        print(contents)
+        print('Keywords to replace with images', keywords)
+        if keywords:
+            image_kw_mapping = download_images(image_directory, keywords)
+            print(image_kw_mapping)
+            for key, image_path in image_kw_mapping.items():
+                replacement = image_template.format(key,image_path)
+                contents = re.sub(keyword_pattern, replacement, contents, count=1, flags=re.DOTALL)
+            print(contents)
 
-        # contents = add_links_to_articles(contents, topic)
+        print('Adding links to article...')
+        contents = add_links_to_articles(contents, topic)
+        print('Reformatting references...')
+        contents = replace_references(contents)
 
         # Write the modified contents back to the markdown file
         with open(file_path, 'w') as file:

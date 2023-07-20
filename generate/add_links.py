@@ -3,7 +3,7 @@ import sys
 import random
 import spacy
 from bs4 import BeautifulSoup
-from googlesearch import search
+from serps import get_links
 
 nlp = spacy.load('en_core_web_sm')
 
@@ -20,10 +20,6 @@ def extract_last_four_words(text):
             last_four_words_list.append(last_four_words)
     return last_four_words_list
 
-def search_google(query, num_results=5):
-    search_results = search(query, num_results=num_results, lang='en')
-    return search_results
-
 def scrape_web_page(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -38,7 +34,7 @@ def add_links_to_articles(markdown_content, base_query):
     for phrase in keyphrases:
         print(f'Searching {phrase}')
         time.sleep(2)
-        links = search_google(f'{base_query} {phrase}')
+        links = [l[1] for l in get_links(f'{base_query} {phrase}')]
         links = [l for l in links if l not in link_bank]
         link = random.choice(links)
         link_bank.append(link)
@@ -63,7 +59,7 @@ if __name__ == '__main__':
     link_bank = []
     for phrase in keyphrases:
         time.sleep(2)
-        links = search_google(f'{base_query} {phrase}')
+        links = [l[1] for l in get_links(f'{base_query} {phrase}')]
         links = [l for l in links if l not in link_bank]
         link = random.choice(links)
         link_bank.append(link)
