@@ -82,6 +82,7 @@ date: "${date}"
 description: "${post.seoDescription}"
 categories: ${categories}
 draft: false
+slug: "${post.slug}"
 ---
 ${post.content}
 `;
