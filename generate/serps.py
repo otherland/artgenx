@@ -12,7 +12,7 @@ import os
 import json
 from bs4 import BeautifulSoup
 from datetime import datetime
-from get_structure_for_webpage import get_outline
+from generate.get_structure_for_webpage import get_outline
 
 
 async def fetch_html(url):

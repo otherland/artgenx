@@ -1,8 +1,8 @@
 import re
 import os
 import glob
-from google_image_scraper import download_images
-from add_links import add_links_to_articles
+from generate.google_image_scraper import download_images
+from generate.add_links import add_links_to_articles
 
 def replace_references(text):
     # Use regular expression to find and replace the references
