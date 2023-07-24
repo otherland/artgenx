@@ -27,7 +27,7 @@ def scrape_web_page(url):
 
 def add_links_to_articles(markdown_content, base_query):
 
-    keyphrases = extract_last_four_words(markdown_content)[::6]
+    keyphrases = extract_last_four_words(markdown_content)[::6][:5]
     print(keyphrases)
 
     link_bank = []

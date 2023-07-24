@@ -7,7 +7,7 @@ from add_links import add_links_to_articles
 def replace_references(text):
     # Use regular expression to find and replace the references
     updated_text = re.sub(r'\[\^(\d)\^\]', r'[^\1]', text)
-    updated_text = re.sub('**References:**', '', text)
+    updated_text = updated_text.replace('**References:**', '')
     return updated_text
 
 def add_images_to_articles(topic, image_directory, article_directory):
