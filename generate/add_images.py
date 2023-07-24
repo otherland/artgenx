@@ -34,6 +34,10 @@ def add_images_to_articles(topic, image_directory, article_directory):
                 contents = re.sub(keyword_pattern, replacement, contents, count=1, flags=re.DOTALL)
             print(contents)
 
+        # Write the modified contents back to the markdown file
+        with open(file_path, 'w') as file:
+            file.write(contents)
+
         print('Adding links to article...')
         contents = add_links_to_articles(contents, topic)
         print('Reformatting references...')
