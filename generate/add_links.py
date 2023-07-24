@@ -3,7 +3,7 @@ import sys
 import random
 import spacy
 from bs4 import BeautifulSoup
-from serps import get_links
+from .serps import get_links
 
 nlp = spacy.load('en_core_web_sm')
 

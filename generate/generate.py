@@ -7,9 +7,9 @@ import subprocess
 import json
 from subprocess import Popen, PIPE, CalledProcessError
 import Levenshtein
-from serps import get_serps
-from embed import json_to_vectorstore
-from add_images import add_images_to_articles
+from .serps import get_serps
+from .embed import json_to_vectorstore
+from .add_images import add_images_to_articles
 
 def toSnakeCase(string):
     string = re.sub(r'(?<=[a-z])(?=[A-Z])|[^a-zA-Z]', ' ', string).strip().replace(' ', '_')
