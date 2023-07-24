@@ -21,6 +21,8 @@ def query_endpoint():
     docs = retriever.get_relevant_documents(query)
     if docs:
         return jsonify(docs[0].page_content.replace('\n',' '))
+    else:
+        return jsonify([])
 
 if __name__ == '__main__':
     app.run(debug=True)

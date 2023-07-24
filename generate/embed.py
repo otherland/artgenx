@@ -46,4 +46,4 @@ def json_to_vectorstore(filepath):
         db2.persist()
         print("Chroma persisted database created.")
 
-    return persist_directory
+    return os.path.abspath(persist_directory)
