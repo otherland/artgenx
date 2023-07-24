@@ -14,6 +14,7 @@ class Website(models.Model):
     hugo_dir = models.CharField(max_length=1024, blank=True)
     data_dir = models.CharField(max_length=1024, blank=True)
 
+    setup_github = models.BooleanField(default=True)
     name = models.CharField(max_length=100, unique=True, blank=True, null=True)
     api_key = models.CharField(max_length=100, blank=True, null=True)
 
