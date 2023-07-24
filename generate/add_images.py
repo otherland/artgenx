@@ -23,7 +23,7 @@ def add_images_to_articles(topic, image_directory, article_directory):
         # For example, let's convert all headings to uppercase
         keyword_pattern = r"<!--keywords:(.*?)-->"
         image_template = '![{}]({})'
-        keywords = re.findall(keyword_pattern, contents, flags=re.DOTALL)
+        keywords = [i for i in re.findall(keyword_pattern, contents, flags=re.DOTALL) if i]
 
         print('Keywords to replace with images', keywords)
         if keywords:
