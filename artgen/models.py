@@ -15,6 +15,8 @@ class Website(models.Model):
     data_dir = models.CharField(max_length=1024, blank=True)
 
     setup_github = models.BooleanField(default=True)
+    github_repo_url = models.CharField(max_length=1024, blank=True)
+
     name = models.CharField(max_length=100, unique=True, blank=True, null=True)
     api_key = models.CharField(max_length=100, blank=True, null=True)
 
@@ -32,6 +34,8 @@ class Website(models.Model):
         super().save(*args, **kwargs)
 
     def create_github_repo(self):
+        if not self.setup_github:
+            return
         # Create a GitHub repository
         try:
             github_token = settings.GITHUB_ACCESS_TOKEN  # Get the token from Django settings
