@@ -91,7 +91,6 @@ class Article(models.Model):
             process_article_task.delay(
                 self.id,
                 self.query,
-                self.website_id,
             )
 
         super().save(*args, **kwargs)
