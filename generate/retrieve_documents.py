@@ -1,3 +1,4 @@
+from django.conf import settings
 import os
 from flask import Flask, request, jsonify
 import openai
@@ -20,7 +21,7 @@ def query_endpoint():
     persist_directory = request.json.get('directory')
     query = request.json.get('query')
 
-    embeddings = OpenAIEmbeddings(openai_api_key=openai.api_key)
+    embeddings = OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY)
     vectordb = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
     retriever = vectordb.as_retriever()
     docs = retriever.get_relevant_documents(query)

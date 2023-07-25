@@ -1,3 +1,4 @@
+from django.conf import settings
 from langchain.document_loaders import JSONLoader
 import sys
 import openai
@@ -45,7 +46,7 @@ def json_to_vectorstore(filepath):
     )
     data = loader.load()
 
-    embedding_function = OpenAIEmbeddings(openai_api_key=os.environ.get('OPENAI_KEY'))
+    embedding_function = OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY)
     db2.add_documents(data, embedding_function)
 
     # Persist the updated collection
