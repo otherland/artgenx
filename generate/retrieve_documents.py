@@ -6,14 +6,14 @@ from langchain.vectorstores import Chroma
 from fastapi.encoders import jsonable_encoder
 from dotenv import load_dotenv
 
-app = Flask(__name__)
-app.config['JSON_SORT_KEYS'] = False
-
 # Load environment variables from .env file
 load_dotenv()
 
 # Access environment variables using os.getenv()
 openai.api_key = os.getenv('OPENAI_KEY')
+
+app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
 
 @app.route('/query', methods=['POST'])
 def query_endpoint():
