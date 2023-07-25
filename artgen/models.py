@@ -82,13 +82,13 @@ class Website(models.Model):
 
 class Article(models.Model):
     query = models.CharField(max_length=100)
-    site = models.ForeignKey(Website, on_delete=models.CASCADE)
+    website = models.ForeignKey(Website, on_delete=models.CASCADE)
     markdown_file = models.FileField(upload_to='markdown_files/', blank=True)
 
     def save(self, *args, **kwargs):
         # Trigger Celery task upon article creation
         if not self.pk:
-            process_article_task.delay(self.id, self.query, self.site)
+            process_article_task.delay(self.id, self.query, self.website)
 
         super().save(*args, **kwargs)
 
