@@ -14,7 +14,7 @@ class ArticleAdminForm(forms.ModelForm):
 
 class ArticleAdmin(admin.ModelAdmin):
     form = ArticleAdminForm
-    list_display = ('query', 'site',)
+    list_display = ('query', 'website',)
 
     
 admin.site.register(Website,)
