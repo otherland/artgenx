@@ -3,7 +3,7 @@ from celery import shared_task
 from generate.generate import generate
 
 @shared_task
-def process_article_task(id, query, site):
+def process_article_task(id, query, hugo_dir, data_dir, topic):
 	post_dir = os.path.join(site.hugo_dir, 'content', 'posts')
 	data_dir = site.data_dir
 	image_dir = os.path.join(site.hugo_dir, 'static', 'images')
