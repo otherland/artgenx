@@ -88,15 +88,10 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         # Trigger Celery task upon article creation
         if not self.pk:
-            data = {
-                "hugo_dir": getattr(self.website, "hugo_dir", None),
-                "data_dir": getattr(self.website, "data_dir", None),
-                "topic": getattr(self.website, "topic", None),
-            }
             process_article_task.delay(
                 self.id,
                 self.query,
-                data
+                self.website_id,
             )
 
         super().save(*args, **kwargs)
