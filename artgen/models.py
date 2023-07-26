@@ -85,12 +85,23 @@ class Article(models.Model):
     website = models.ForeignKey(Website, on_delete=models.CASCADE)
     markdown_file = models.FileField(upload_to='markdown_files/', blank=True)
 
+    class Meta:
+        # Define unique_together to make articles unique by website and query
+        unique_together = ('website', 'query')
+
+    def get_site_data(self):
+        post_dir = os.path.join(self.website.hugo_dir, 'content', 'posts')
+        data_dir = self.website.data_dir
+        image_dir = os.path.join(self.website.hugo_dir, 'static', 'images')
+        return (post_dir, data_dir, image_dir, self.website.topic)
+
     def save(self, *args, **kwargs):
         # Trigger Celery task upon article creation
         if not self.pk:
             process_article_task.delay(
                 self.id,
                 self.query,
+                self.get_site_data(),
             )
 
         super().save(*args, **kwargs)
