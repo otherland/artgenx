@@ -10,7 +10,7 @@ import shutil
 
 
 class Website(models.Model):
-    topic = models.CharField(max_length=100)
+    topic = models.CharField(max_length=100, unique=True)
     hugo_dir = models.CharField(max_length=1024, blank=True)
     data_dir = models.CharField(max_length=1024, blank=True)
 

@@ -33,9 +33,9 @@ def json_to_vectorstore(filepath):
 
     if os.path.exists(persist_directory):
         print("Chroma persisted database already exists. Loading existing collection.")
-        db2 = Chroma.load(persist_directory)
+        db2 = Chroma(collection_name=collection_name, persist_directory=persist_directory)
     else:
-        db2 = Chroma(persist_directory)
+        db2 = Chroma(collection_name=collection_name, persist_directory=persist_directory)
 
     loader = JSONLoader(
         filepath,
