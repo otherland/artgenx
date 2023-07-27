@@ -96,16 +96,16 @@ class Article(models.Model):
         return (post_dir, data_dir, image_dir, self.website.topic)
 
     def save(self, *args, **kwargs):
-        # Trigger Celery task upon article creation
-        if not self.pk:
+        is_new_object = self._state.adding  # Check if the object is new
+
+        super().save(*args, **kwargs)
+
+        if is_new_object:
             process_article_task.delay(
                 self.id,
                 self.query,
                 self.get_site_data(),
             )
-
-        super().save(*args, **kwargs)
-
 
     def __str__(self):
         return self.query
