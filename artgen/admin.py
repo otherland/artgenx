@@ -7,14 +7,14 @@ from markdownx.widgets import MarkdownxWidget  # Import MarkdownxWidget
 class ArticleAdminForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = ('query', 'website', 'markdown_file', 'failed_flag')
         widgets = {
             'markdown_file': MarkdownxWidget,
         }
 
 class ArticleAdmin(admin.ModelAdmin):
     form = ArticleAdminForm
-    list_display = ('query', 'website', 'failed_flag')
+    list_display = ('query', 'website')
 
     
 admin.site.register(Website,)
