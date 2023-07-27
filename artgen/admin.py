@@ -14,7 +14,7 @@ class ArticleAdminForm(forms.ModelForm):
 
 class ArticleAdmin(admin.ModelAdmin):
     form = ArticleAdminForm
-    list_display = ('query', 'website',)
+    list_display = ('query', 'website', 'failed_flag')
 
     
 admin.site.register(Website,)
