@@ -1,21 +1,21 @@
 import time
 import sys
 import random
-import spacy
+
 from bs4 import BeautifulSoup
 from .serps import get_links
 
-try:
-    nlp = spacy.load('en_core_web_sm')
-except OSError:
-    print('Downloading language model for the spaCy POS tagger\n'
-        "(don't worry, this will only happen once)")
-    from spacy.cli import download
-    download('en_core_web_sm')
-    nlp = spacy.load('en_core_web_sm')
-
 
 def extract_last_four_words(text):
+    import spacy
+    try:
+        nlp = spacy.load('en_core_web_sm')
+    except OSError:
+        print('Downloading language model for the spaCy POS tagger\n'
+            "(don't worry, this will only happen once)")
+        from spacy.cli import download
+        download('en_core_web_sm')
+        nlp = spacy.load('en_core_web_sm')
     doc = nlp(text)
     last_four_words_list = []
 
