@@ -84,6 +84,7 @@ class Article(models.Model):
     query = models.CharField(max_length=100)
     website = models.ForeignKey(Website, on_delete=models.CASCADE)
     markdown_file = models.FileField(upload_to='markdown_files/', blank=True)
+    failed_flag = models.BooleanField(default=False)
 
     class Meta:
         # Define unique_together to make articles unique by website and query
@@ -102,9 +103,7 @@ class Article(models.Model):
 
         if is_new_object:
             process_article_task.delay(
-                self.id,
-                self.query,
-                self.get_site_data(),
+                id=self.id,
             )
 
     def __str__(self):
