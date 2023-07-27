@@ -96,15 +96,5 @@ class Article(models.Model):
         image_dir = os.path.join(self.website.hugo_dir, 'static', 'images')
         return (post_dir, data_dir, image_dir, self.website.topic)
 
-    def save(self, *args, **kwargs):
-        is_new_object = self._state.adding  # Check if the object is new
-
-        super().save(*args, **kwargs)
-
-        if is_new_object:
-            process_article_task.delay(
-                id=self.id,
-            )
-
     def __str__(self):
         return self.query
