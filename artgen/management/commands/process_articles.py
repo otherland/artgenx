@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Get articles with null markdown_file
-        articles_to_process = Article.objects.filter(markdown_file__isnull=True)
+        articles_to_process = Article.objects.filter(markdown_file='')
 
         for article in articles_to_process:
             current_app.send_task('artgen.tasks.process_article_task', args=[article.id])
