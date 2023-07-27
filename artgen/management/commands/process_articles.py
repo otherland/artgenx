@@ -11,4 +11,4 @@ class Command(BaseCommand):
         articles_to_process = Article.objects.filter(markdown_file='')
 
         for article in articles_to_process:
-            current_app.send_task('artgen.tasks.process_article_task', args=[article.id])
+            current_app.send_task('artgen.tasks.process_article_task', kwargs={'id': article.id})
