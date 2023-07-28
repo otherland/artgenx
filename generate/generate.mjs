@@ -6,6 +6,9 @@ import fs from 'fs';
 import path from 'path';
 import { retrieveDocuments } from './retrieve_documents.mjs';
 
+// Access command-line arguments
+const args = process.argv.slice(2);
+
 const directory = args[0];
 const subject = args[1];
 const categories = JSON.stringify(args[2].split(','));
