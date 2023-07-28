@@ -10,7 +10,7 @@ def process_article_task(self, id):
         article = Article.objects.get(pk=id)
         post_dir, data_dir, image_dir, subject = article.get_site_data()
 
-        article.markdown_file = generate(topic=article.query, subject=subject, post_dir, data_dir, image_dir)
+        article.markdown_file = generate(article.query, subject, post_dir, data_dir, image_dir)
         article.save()
 
     except Exception as exc:
