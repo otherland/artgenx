@@ -54,7 +54,7 @@ def generate(topic, subject, post_destination, serp_results_dir, image_directory
     serp_headings = '\n'.join(random.sample(get_unique_strings(serp_headings, threshold=0.7), 100))
 
     print('Serp outlines:', serp_headings)
-
+    categories = subject
     print('Running generate.mjs')
     command = ['/usr/local/bin/node', 
         './generate.mjs', 
