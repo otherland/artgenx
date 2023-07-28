@@ -8,6 +8,30 @@ from langchain.vectorstores import Chroma
 import uuid
 import json
 
+import re
+
+def generate_collection_name(input_string):
+    # Remove leading and trailing whitespaces from the input
+    input_string = input_string.strip()
+
+    # Replace spaces with underscores and convert to lowercase
+    collection_name = input_string.replace(' ', '_').lower()
+
+    # Remove any characters that are not alphanumeric, underscores, or hyphens
+    collection_name = re.sub(r'[^a-zA-Z0-9_-]', '', collection_name)
+
+    # Remove consecutive underscores and hyphens
+    collection_name = re.sub(r'[-_]{2,}', '', collection_name)
+
+    # Ensure the collection name starts and ends with an alphanumeric character
+    collection_name = collection_name.strip('_-')
+    
+    # Ensure the collection name is between 3 and 63 characters in length
+    collection_name = collection_name[:63]
+
+    return collection_name
+
+
 # Define the metadata extraction function.
 def metadata_func(record: dict, metadata: dict) -> dict:
     metadata["title"] = json.dumps(record.get("title", ""))
@@ -30,7 +54,7 @@ def metadata_func(record: dict, metadata: dict) -> dict:
 
 def json_to_vectorstore(collection_name, filepath):
     persist_directory = os.path.join(os.path.dirname(filepath), 'vector_store')
-
+    collection_name = generate_collection_name(collection_name)
     if os.path.exists(persist_directory):
         print("Chroma persisted database already exists. Loading existing collection.")
         db2 = Chroma(collection_name=collection_name, persist_directory=persist_directory)
