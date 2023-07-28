@@ -10,6 +10,7 @@ import Levenshtein
 from .serps import get_serps
 from .embed import json_to_vectorstore
 from .add_images import add_images_to_articles
+from django.conf import settings
 
 def toSnakeCase(string):
     string = re.sub(r'(?<=[a-z])(?=[A-Z])|[^a-zA-Z]', ' ', string).strip().replace(' ', '_')
@@ -56,7 +57,7 @@ def generate(topic, subject, post_destination, serp_results_dir, image_directory
     print('Serp outlines:', serp_headings)
     categories = subject
     print('Running generate.mjs')
-    
+
     command = ['/usr/local/bin/node', 
         os.path.join(settings.BASE_DIR, 'generate', 'generate.mjs'), 
         post_destination, 
