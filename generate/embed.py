@@ -55,11 +55,11 @@ def metadata_func(record: dict, metadata: dict) -> dict:
 def json_to_vectorstore(collection_name, filepath):
     persist_directory = os.path.join(os.path.dirname(filepath), 'vector_store')
     collection_name = generate_collection_name(collection_name)
+
     if os.path.exists(persist_directory):
         print("Chroma persisted database already exists. Loading existing collection.")
-        db2 = Chroma(collection_name=collection_name, persist_directory=persist_directory)
-    else:
-        db2 = Chroma(collection_name=collection_name, persist_directory=persist_directory)
+    embedding_function = OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY)
+    db2 = Chroma(collection_name=collection_name, persist_directory=persist_directory, embedding_function=embedding_function)
 
     loader = JSONLoader(
         filepath,
@@ -70,8 +70,7 @@ def json_to_vectorstore(collection_name, filepath):
     )
     data = loader.load()
 
-    embedding_function = OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY)
-    db2.add_documents(data, embedding_function)
+    db2.add_documents(data)
 
     # Persist the updated collection
     db2.persist()
