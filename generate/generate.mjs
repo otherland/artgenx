@@ -6,22 +6,13 @@ import fs from 'fs';
 import path from 'path';
 import { retrieveDocuments } from './retrieve_documents.mjs';
 
-// Access command-line arguments
-const args = process.argv.slice(2);
-
-// Print the arguments
-console.log('Arguments:', args);
-
-// Use the arguments
-if (args.length < 2) {
-  console.log('Please provide at least 2 arguments.');
-}
 const directory = args[0];
 const subject = args[1];
 const categories = JSON.stringify(args[2].split(','));
 const topic = args[3];
 const serp_outlines = args[4];
 const vector_store = args[5];
+const OPENAI_API_KEY = args[6];
   
 console.log('Directory:', directory);
 console.log('Subject:', subject);
@@ -49,7 +40,7 @@ const enrichOutline = async (outline, subject) => {
 };
 
 const prompt = {
-  apiKey: process.env.OPENAI_KEY,
+  apiKey: OPENAI_API_KEY,
   topic: topic,
   enrichOutline: enrichOutline,
   serp_outlines: serp_outlines,

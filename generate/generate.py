@@ -66,6 +66,7 @@ def generate(topic, subject, post_destination, serp_results_dir, image_directory
         topic, 
         serp_headings, 
         vector_store,
+        settings.OPENAI_API_KEY,
     ]
     try:
         with Popen(command, stdout=PIPE, bufsize=1, universal_newlines=True) as p:
