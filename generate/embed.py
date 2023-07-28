@@ -28,7 +28,7 @@ def metadata_func(record: dict, metadata: dict) -> dict:
 
     return metadata
 
-def json_to_vectorstore(filepath):
+def json_to_vectorstore(collection_name, filepath):
     persist_directory = os.path.join(os.path.dirname(filepath), 'vector_store')
 
     if os.path.exists(persist_directory):

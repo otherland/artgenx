@@ -45,7 +45,7 @@ def generate(topic, subject, post_destination, serp_results_dir, image_directory
         with open(serp_results_filepath) as fp:
             serp_results = json.load(fp)
 
-    vector_store = json_to_vectorstore(topic, serp_results_filepath)
+    vector_store = json_to_vectorstore(collection_name=topic, filepath=serp_results_filepath)
     serp_headings = []
     for result in serp_results:
         for heading in result.get('header_outline',''):
