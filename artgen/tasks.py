@@ -4,7 +4,7 @@ from generate.generate import generate
 
 
 @shared_task(bind=True, autoretry_for=(Exception,), retry_backoff=True, retry_kwargs={'max_retries': 5})
-def process_article_task(id):
+def process_article_task(self, id):
     from artgen.models import Article
     try:
         article = Article.objects.get(pk=id)
