@@ -56,8 +56,9 @@ def generate(topic, subject, post_destination, serp_results_dir, image_directory
     print('Serp outlines:', serp_headings)
     categories = subject
     print('Running generate.mjs')
+    
     command = ['/usr/local/bin/node', 
-        './generate.mjs', 
+        os.path.join(settings.BASE_DIR, 'generate', 'generate.mjs'), 
         post_destination, 
         subject, 
         categories, 
