@@ -8,9 +8,9 @@ def process_article_task(self, id):
     from artgen.models import Article
     try:
         article = Article.objects.get(pk=id)
-        post_dir, data_dir, image_dir, topic = article.get_site_data()
+        post_dir, data_dir, image_dir, subject = article.get_site_data()
 
-        article.markdown_file = generate(topic, article.query, post_dir, data_dir, image_dir)
+        article.markdown_file = generate(topic=article.query, subject=subject, post_dir, data_dir, image_dir)
         article.save()
 
     except Exception as exc:
