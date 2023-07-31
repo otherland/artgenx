@@ -30,7 +30,7 @@ def add_images_to_articles(topic, image_directory, article_directory):
             image_kw_mapping = download_images(image_directory, keywords)
             print(image_kw_mapping)
             for key, image_path in image_kw_mapping.items():
-                replacement = image_template.format(key,image_path)
+                replacement = image_template.format(key, image_path)
                 contents = re.sub(keyword_pattern, replacement, contents, count=1, flags=re.DOTALL)
             print(contents)
 
