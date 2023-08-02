@@ -7,7 +7,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Replace 'submodule1', 'submodule2', etc. with the actual submodule folder names
-        website.hugo_dir
         submodules = list(Article.objects.values_list('website__hugo_dir', flat=True))
 
         commit_message = "Updating site content to git"
