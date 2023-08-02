@@ -1,7 +1,6 @@
 import os
 from celery import shared_task
 from generate.generate import generate
-from artgen.models import Article
 from subprocess import run
 
 
@@ -26,6 +25,7 @@ def process_article_task(self, id):
 
 @shared_task(bind=True, autoretry_for=(Exception,), retry_backoff=True, retry_kwargs={'max_retries': 5})
 def queue_articles(self):
+    from artgen.models import Article
     articles_to_process = Article.objects.filter(markdown_file='')
 
     # send unwritten articles for writing
@@ -34,6 +34,7 @@ def queue_articles(self):
 
 @shared_task(bind=True, autoretry_for=(Exception,), retry_backoff=True, retry_kwargs={'max_retries': 5})
 def update_site_repos(self):
+    from artgen.models import Article
     # update git repos for all sites
     submodules = list(Article.objects.values_list('website__hugo_dir', flat=True))
 
