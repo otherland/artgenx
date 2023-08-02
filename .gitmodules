@@ -4,3 +4,6 @@
 [submodule "sites/permaculture/site"]
 	path = sites/permaculture/site
 	url = git@github.com:otherland/blog_permaculture.git
+[submodule "sites/template/site/themes/mainroad"]
+	path = sites/template/site/themes/mainroad
+	url = https://github.com/vimux/mainroad.git
