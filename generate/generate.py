@@ -9,7 +9,7 @@ from subprocess import Popen, PIPE, CalledProcessError
 import Levenshtein
 from .serps import get_serps
 from .embed import json_to_vectorstore
-from .add_images import add_images_to_articles
+from .add_images import add_images_to_article
 from django.conf import settings
 
 def toSnakeCase(string):
@@ -71,13 +71,16 @@ def generate(topic, subject, post_destination, serp_results_dir, image_directory
     try:
         with Popen(command, stdout=PIPE, bufsize=1, universal_newlines=True) as p:
             for line in p.stdout:
+                if 'Markdown file has been written.' in line:
+                    article_filepath = line.split('Markdown file has been written.')[1].strip()
                 print(line, end='') # process line here
     except CalledProcessError as e:
         raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
 
-    print('Adding images to articles')
-    # Call the function to edit the markdown files
-    add_images_to_articles(topic, image_directory, post_destination)
+    print('Adding images to article')
+    add_images_to_articles(topic, image_directory, article_filepath)
+
+    return article_filepath
 
 if __name__ == '__main__':
     subject = sys.argv[1]
