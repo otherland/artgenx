@@ -1,0 +1,26 @@
+from django.core.management.base import BaseCommand
+from subprocess import run
+from artgen.models import Article
+
+class Command(BaseCommand):
+    help = 'Commit and push changes inside Git submodules'
+
+    def handle(self, *args, **kwargs):
+        # Replace 'submodule1', 'submodule2', etc. with the actual submodule folder names
+        website.hugo_dir
+        submodules = list(Article.objects.values_list('website__hugo_dir', flat=True))
+
+        commit_message = "Updating site content to git"
+
+        for submodule in submodules:
+            # Navigate to the submodule folder
+            run(f'cd {submodule}', shell=True)
+
+            # Stage and commit changes
+            run('git add .', shell=True)
+            run(f'git commit -m "{commit_message}"', shell=True)
+
+            # Push the changes to the remote repository
+            run('git push origin master', shell=True)
+
+        self.stdout.write(self.style.SUCCESS('Successfully committed and pushed changes in all submodules.'))
