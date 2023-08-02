@@ -1,6 +1,8 @@
 import os
 from celery import shared_task
 from generate.generate import generate
+from artgen.models import Article
+from subprocess import run
 
 
 @shared_task(bind=True, autoretry_for=(Exception,), retry_backoff=True, retry_kwargs={'max_retries': 5})
@@ -21,3 +23,32 @@ def process_article_task(self, id):
         else:
             # If the task failed but is still retrying, re-raise the exception for retry
             self.retry(exc=exc, countdown=2 ** self.request.retries)
+
+@shared_task(bind=True, autoretry_for=(Exception,), retry_backoff=True, retry_kwargs={'max_retries': 5})
+def queue_articles(self):
+    articles_to_process = Article.objects.filter(markdown_file='')
+
+    # send unwritten articles for writing
+    for article in articles_to_process:
+        current_app.send_task('artgen.tasks.process_article_task', kwargs={'id': article.id})
+
+@shared_task(bind=True, autoretry_for=(Exception,), retry_backoff=True, retry_kwargs={'max_retries': 5})
+def update_site_repos(self):
+    # update git repos for all sites
+    submodules = list(Article.objects.values_list('website__hugo_dir', flat=True))
+
+    commit_message = "Updating site content to git"
+
+    for submodule in submodules:
+        self.stdout.write(self.style.SUCCESS(f'Pushing for module {submodule}'))
+        # Navigate to the submodule folder
+        run(f'cd {submodule}', shell=True)
+
+        # Stage and commit changes
+        run('git add .', shell=True)
+        run(f'git commit -m "{commit_message}"', shell=True)
+
+        # Push the changes to the remote repository
+        run('git push origin master', shell=True)
+
+    self.stdout.write(self.style.SUCCESS('Successfully committed and pushed changes in all submodules.'))
