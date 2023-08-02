@@ -12,7 +12,7 @@ class Command(BaseCommand):
         commit_message = "Updating site content to git"
 
         for submodule in submodules:
-            self.stdout.write(self.style.INFO(f'Pushing for module {submodule}'))
+            self.stdout.write(self.style.SUCCESS(f'Pushing for module {submodule}'))
             # Navigate to the submodule folder
             run(f'cd {submodule}', shell=True)
 
