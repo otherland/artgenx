@@ -18,7 +18,7 @@ def add_images_to_article(topic, image_directory, article_filepath):
     # Perform your desired modifications to the contents
     # For example, let's convert all headings to uppercase
     keyword_pattern = r"<!--keywords:(.*?)-->"
-    image_template = '![{}]({})'
+    image_template = '![{}](/images/{})'
     keywords = [i for i in re.findall(keyword_pattern, contents, flags=re.DOTALL) if i]
 
     print('Keywords to replace with images', keywords)
@@ -26,7 +26,8 @@ def add_images_to_article(topic, image_directory, article_filepath):
         image_kw_mapping = download_images(image_directory, keywords)
         print(image_kw_mapping)
         for key, image_path in image_kw_mapping.items():
-            replacement = image_template.format(key, image_path)
+            image_filename = os.path.split(image_path)[-1]
+            replacement = image_template.format(key, image_filename)
             contents = re.sub(keyword_pattern, replacement, contents, count=1, flags=re.DOTALL)
         print(contents)
 
