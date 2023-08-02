@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from subprocess import run
 from artgen.models import Article
+from pathlib import Path
 
 class Command(BaseCommand):
     help = 'Commit and push changes inside Git submodules'
@@ -12,9 +13,10 @@ class Command(BaseCommand):
         commit_message = "Updating site content to git"
 
         for submodule in submodules:
-            self.stdout.write(self.style.SUCCESS(f'Pushing for module {submodule}'))
+            submodule_path = Path(submodule)
+            self.stdout.write(self.style.SUCCESS(f'Pushing for module {submodule_path}'))
             # Navigate to the submodule folder
-            run(f'cd {submodule}', shell=True)
+            os.chdir(submodule_path)
 
             # Stage and commit changes
             run('git add .', shell=True)

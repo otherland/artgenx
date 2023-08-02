@@ -1,0 +1,2 @@
+* * * * * /devapps/artgen/bin/python /devapps/artgen/manage.py process_articles >> /devapps/artgen/artgen/logs/management.log 2>&1
+*/5 * * * * /devapps/artgen/bin/python /devapps/artgen/manage.py push_articles >> /devapps/artgen/artgen/logs/management.log 2>&1
