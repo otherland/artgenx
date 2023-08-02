@@ -77,6 +77,8 @@ description: "${post.seoDescription}"
 categories: ${categories}
 draft: false
 slug: "${post.slug}"
+has_images_added: false
+has_links_added: false
 ---
 ${post.content}
 `;
@@ -92,5 +94,5 @@ fs.writeFile(filePath, fileString, 'utf8', (err) => {
     console.error('Error writing file:', err);
     return;
   }
-  console.log('Markdown file has been written.');
+  console.log('Markdown file has been written.', filePath);
 });

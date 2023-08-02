@@ -6,4 +6,7 @@
 	url = git@github.com:otherland/blog_permaculture.git
 [submodule "sites/template/site/themes/mainroad"]
 	path = sites/template/site/themes/mainroad
-	url = https://github.com/vimux/mainroad.git
+	url = git@github.com/vimux/mainroad.git
+[submodule "sites/music-education-website/site"]
+	path = sites/music-education-website/site
+	url = git@github.com/otherland/music-education-website
