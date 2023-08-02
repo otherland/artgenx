@@ -4,12 +4,9 @@
 [submodule "sites/permaculture/site"]
 	path = sites/permaculture/site
 	url = git@github.com:otherland/blog_permaculture.git
-[submodule "sites/music-learning-website/music-education-website"]
-	path = sites/music-learning-website/music-education-website
-	url = https://github.com/otherland/music-education-website
-[submodule "sites/music-education-website/music-education-website"]
-	path = sites/music-education-website/music-education-website
-	url = https://github.com/otherland/music-education-website
+[submodule "sites/template/site/themes/mainroad"]
+	path = sites/template/site/themes/mainroad
+	url = git@github.com/vimux/mainroad.git
 [submodule "sites/music-education-website/site"]
 	path = sites/music-education-website/site
-	url = https://github.com/otherland/music-education-website
+	url = git@github.com/otherland/music-education-website
