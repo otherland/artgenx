@@ -25,7 +25,6 @@ class Website(models.Model):
     setup_github = models.BooleanField(default=True)
     github_repo_url = models.CharField(max_length=1024, blank=True)
 
-    name = models.CharField(max_length=100, unique=True, blank=True, null=True)
     api_key = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):

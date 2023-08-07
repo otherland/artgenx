@@ -16,6 +16,9 @@ class ArticleAdmin(admin.ModelAdmin):
     form = ArticleAdminForm
     list_display = ('query', 'website')
 
-    
-admin.site.register(Website,)
+
+class WebsiteAdmin(admin.ModelAdmin):
+    list_display = ('topic', 'hugo_dir', 'data_dir', 'title', 'author_name', 'google_analytics', 'setup_github', 'github_repo_url', 'api_key')
+
+admin.site.register(Website, WebsiteAdmin)    
 admin.site.register(Article, ArticleAdmin)
