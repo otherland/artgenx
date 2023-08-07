@@ -8,6 +8,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib import admin
 from .tasks import process_article_task
+from generate.cloudflare_deploy import deploy_project
 import shutil
 
 
@@ -111,6 +112,10 @@ class Website(models.Model):
         # Update the Website object with the GitHub repository URL
         self.github_repo_url = repo.html_url
         self.save()
+
+        print('Deploying project to Cloudflare...')
+
+        deploy_project(project_name=repo_name)
 
 
 
