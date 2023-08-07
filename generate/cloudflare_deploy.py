@@ -59,7 +59,7 @@ if __name__ == "__main__":
     # Set your Cloudflare API Token, Account ID, and Project Name here
     CLOUDFLARE_API = "uTdfhnltZNz-nVmsz62nrzeRpracplXHEehju9ee"
     CLOUDFLARE_ACCOUNT_ID = "1d0a91a3fb595e00f275d0cd1215a636"
-    project_name = "music-education-website"
+    project_name = "health-website"
 
-    # create_project_to_cloudflare(CLOUDFLARE_API, CLOUDFLARE_ACCOUNT_ID, project_name)
+    create_project_to_cloudflare(CLOUDFLARE_API, CLOUDFLARE_ACCOUNT_ID, project_name)
     deploy_project_to_cloudflare(CLOUDFLARE_API, CLOUDFLARE_ACCOUNT_ID, project_name)

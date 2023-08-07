@@ -1,4 +1,6 @@
+import toml
 import os
+
 import markdown
 from github import Github, GithubException
 
@@ -13,6 +15,11 @@ class Website(models.Model):
     topic = models.CharField(max_length=100, unique=True)
     hugo_dir = models.CharField(max_length=1024, blank=True)
     data_dir = models.CharField(max_length=1024, blank=True)
+    
+    title = models.CharField(max_length=1024, blank=True)
+    description = models.CharField(max_length=1024, blank=True)
+    author_name = models.CharField(max_length=1024, blank=True)
+    google_analytics = models.CharField(max_length=1024, blank=True)
 
     setup_github = models.BooleanField(default=True)
     github_repo_url = models.CharField(max_length=1024, blank=True)
@@ -67,6 +74,33 @@ class Website(models.Model):
 
         # Initialize Git repository in the target directory
         repo_path = os.path.abspath(self.hugo_dir)
+
+        # Path to the hugo.toml file
+        hugo_toml_path = os.path.join(repo_path, 'hugo.toml')
+
+        # Read the existing hugo.toml file
+        with open(hugo_toml_path, 'r') as toml_file:
+            config = toml.load(toml_file)
+
+        # Modify the values if not blank or empty
+        if self.description:
+            config['Params']['description'] = self.description
+
+        if self.author_name:
+            config['Params']['copyright'] = self.author_name
+            config['Author']['name'] = self.author_name
+
+        if self.title:
+            config['title'] = self.title
+
+        if self.google_analytics:
+            config['googleAnalytics'] = self.google_analytics
+
+        # Write back the modified values to the hugo.toml file
+        with open(hugo_toml_path, 'w') as toml_file:
+            toml.dump(config, toml_file)
+
+
         os.chdir(repo_path)
         os.system("git init")
         os.system("git add .")
