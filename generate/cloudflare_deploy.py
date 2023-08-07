@@ -55,7 +55,7 @@ def deploy_project_to_cloudflare(api_token, account_identifier, project_name):
     except requests.exceptions.RequestException as e:
         print(f"Error occurred: {e}")
 
-def deploy_project(project_name)
+def deploy_project(project_name):
     # Set your Cloudflare API Token, Account ID, and Project Name here
     CLOUDFLARE_API = "uTdfhnltZNz-nVmsz62nrzeRpracplXHEehju9ee"
     CLOUDFLARE_ACCOUNT_ID = "1d0a91a3fb595e00f275d0cd1215a636"
