@@ -3,10 +3,19 @@
 	url = git@github.com:otherland/alex-mastery.git
 [submodule "sites/permaculture/site"]
 	path = sites/permaculture/site
-	url = git@github.com:otherland/blog_permaculture.git
+	url = git@github.com:otherland/permaculture.git
 [submodule "sites/template/site/themes/mainroad"]
 	path = sites/template/site/themes/mainroad
 	url = git@github.com/vimux/mainroad.git
 [submodule "sites/music-education-website/site"]
 	path = sites/music-education-website/site
-	url = git@github.com/otherland/music-education-website
+	url = git@github.com:otherland/music-education-website.git
+[submodule "sites/health-website/site"]
+	path = sites/health-website/site
+	url = git@github.com:otherland/health-website.git
+[submodule "sites/myanswersonaging-website/site"]
+	path = sites/myanswersonaging-website/site
+	url = git@github.com:otherland/myanswersonaging-website.git
+[submodule "sites/vitalmayfair-website/site"]
+	path = sites/vitalmayfair-website/site
+	url = git@github.com:otherland/vitalmayfair-website.git
