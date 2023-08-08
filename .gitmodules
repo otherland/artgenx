@@ -3,7 +3,7 @@
 	url = git@github.com:otherland/alex-mastery.git
 [submodule "sites/permaculture/site"]
 	path = sites/permaculture/site
-	url = git@github.com:otherland/permaculture.git
+	url = git@github.com:otherland/blog_permaculture.git
 [submodule "sites/template/site/themes/mainroad"]
 	path = sites/template/site/themes/mainroad
 	url = git@github.com/vimux/mainroad.git
