@@ -15,7 +15,7 @@ from django.conf import settings
 import openai
 import time
 
-def openai_response(prompt, retries=5, model="gpt-3.5-turbo", is_json=True):
+def openai_response(prompt, retries=5, model="gpt-3.5-turbo", is_json=False):
 	time.sleep(20)
 	for _ in range(retries):
 		try:
@@ -107,7 +107,7 @@ def generate(topic, subject, post_destination, serp_results_dir, image_directory
 
 	openai.api_key = settings.OPENAI_API_KEY
 	prompt = "For content based on the topic " + topic + """, Write an SEO title and an SEO description, H1, and url slug for this blog post. The SEO title should be no more than 60 characters long. The H1 and the title should be different. The SEO description should be no more than 155 characters long. Use the main keywords for the slug based on the topic of the post. Do not mention the country. Max 3 or 4 keywords, without stop words, and with text normalization and accent stripping. Your response should be in the JSON format based on the following structure: {"h1" : "", "keyword": "", "seoTitle": "", "": "seoDescription": "", "slug": ""}"""
-	post = openai_response(prompt=prompt)
+	post = openai_response(prompt=prompt, is_json=True)
 	
 	keyword = post.get("keyword", topic)
 	seoTitle = post.get("seoTitle", topic)
@@ -133,7 +133,7 @@ Use the following json format: {{
 }}
     """
 
-	outline = openai_response(prompt=prompt)
+	outline = openai_response(prompt=prompt, is_json=True)
 	print(outline)
 	print('Expanding outline...')
 	previous_section_content = ""
@@ -152,8 +152,8 @@ Use the following json format: {{
 
 		Use a combination of paragraphs, lists, and tables to enhance the reader's experience. Implement proper SEO formatting by using elements like lists, bold text, italics, quotes, and external links. Remember to maintain a formal and optimistic tone throughout the article. Ask thought-provoking questions and provide concise answers to enhance the chances of achieving a featured snippet on search engines.
 
-		Feel free to use contractions, idioms, transitional phrases, and colloquialisms to make the content more engaging. Avoid repetitive phrases and unnatural sentence structures. Bold the headings and sub-headings using Markdown formatting with **double asterisks**. End questions with a question mark (?). Include at least one paragraph specifically focusing on {section_keywords}. 
-
+		Feel free to use contractions, idioms, transitional phrases, and colloquialisms to make the content more engaging. Avoid repetitive phrases and unnatural sentence structures. Bold the headings and sub-headings using Markdown formatting with **double asterisks**. Include at least one paragraph specifically focusing on {section_keywords}. 
+		Do not say 'Introduction' or 'Conclusion'.
 		Use markdown formatting.
 		"""
 		heading['section_content'] = openai_response(prompt=content_prompt)
