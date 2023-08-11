@@ -156,7 +156,7 @@ Use the following json format: {{
 
 		Use markdown formatting.
 		"""
-		heading['section_content'] = openai_response(prompt=prompt)
+		heading['section_content'] = openai_response(prompt=content_prompt)
 		previous_section_content = heading['section_content']
 		print('Content generated...')
 		print(heading)
