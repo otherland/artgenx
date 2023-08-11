@@ -56,7 +56,7 @@ def openai_response(prompt, retries=5, model="gpt-3.5-turbo", is_json=True):
 			#Handle rate limit error, e.g. wait or log
 			print(f"OpenAI API request exceeded rate limit: {e}")
 			print('Waiting 20 seconds...')
-			time.sleep(20)
+			time.sleep(30)
 			continue
 
 	# If retries are exhausted without a valid JSON response, return None
