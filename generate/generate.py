@@ -26,6 +26,7 @@ def openai_response(prompt, retries=5, model="gpt-3.5-turbo", is_json=True):
 			else:
 				return response
 		except json.JSONDecodeError:
+			print(response)
 			print("JSON is invalid, retrying...")
 			continue
 		except openai.error.Timeout as e:
@@ -134,17 +135,41 @@ Use the following json format: {{
 
 	outline = openai_response(prompt=prompt)
 	print(outline)
-	return
-	prompt = f"""
-	Using markdown formatting, act as an Expert Article Writer and write a fully detailed, long-form, 100% unique, creative, and human-like article of a minimum of 5000 words using headings and sub-headings. The article should be written in a formal, informative, and optimistic tone
-	Must Develop a comprehensive "Outline" for a long-form article for the Keyword {keyword}, featuring at least 25 engaging headings and subheadings that are detailed, mutually exclusive, collectively exhaustive, and cover the entire topic. Must use LSI Keywords in these outlines. Must show these "Outlines" in a table.
-	Use English for the keyword "{keyword}" and write at least 400–500 words of engaging content under every Heading. This article should show the experience, expertise, authority and trust for the Topic {keyword}. Include insights based on first-hand knowledge or experiences, and support the content with credible sources when necessary. Focus on providing accurate, relevant, and helpful information to readers, showcasing both subject matter expertise and personal experience in the topic {keyword}.
-	Try to use contractions, idioms, transitional phrases, interjections, dangling modifiers, and colloquialisms, and avoid repetitive phrases and unnatural sentence structures.
-	When you write, you must correctly format the blog post according to proper SEO standards, with as much rich and detailed HTML as possible, for example, lists, bold, italics, quotes from the internet, tables, and external links to high-quality websites such as Wikipedia. Try to ask questions and then immediately give a good and concise answer, to try to achieve the featured snippet on Google.
-	Also, use the seed keyword as the first H2. Always use a combination of paragraphs, lists, and tables for a better reader experience. Use fully detailed paragraphs that engage the reader. Write at least one paragraph with the heading {keyword}. Write down at least six FAQs with answers and a conclusion.
-	Note: Don't assign Numbers to Headings. Don't assign numbers to Questions. Don't write Q: before the question (faqs)
-	Make sure the article is plagiarism free. Don't forget to use a question mark (?) at the end of questions. Try not to change the original {keyword} while writing the title. Try to use "{keyword}" 2-3 times in the article. Try to include {keyword} in the headings as well. Write content that can easily pass the AI detection tools test. Bold all the headings and sub-headings using Markdown formatting. Use **double asterisks** to create bold text to highlight important phrases and entities.
-	"""
+	print('Expanding outline...')
+	for heading in outline['headings']:
+		section_title = heading['title']
+		section_keywords = heading['keywords']
+	
+		content_prompt = f"""
+		**{section_title}**
+
+		Keywords: {", ".join(section_keywords)}
+
+		Previous section (for context): {previous_section_content}
+
+		Write engaging content for the section "{section_title}" related to the topic {topic}. Focus on the keywords {section_keywords} and provide valuable insights based on your expertise and experiences. Ensure the content is detailed, informative, and helpful to the readers. Incorporate relevant examples, statistics, and credible sources to support your points.
+
+		Use a combination of paragraphs, lists, and tables to enhance the reader's experience. Implement proper SEO formatting by using elements like lists, bold text, italics, quotes, and external links. Remember to maintain a formal and optimistic tone throughout the article. Ask thought-provoking questions and provide concise answers to enhance the chances of achieving a featured snippet on search engines.
+
+		Feel free to use contractions, idioms, transitional phrases, and colloquialisms to make the content more engaging. Avoid repetitive phrases and unnatural sentence structures. Bold the headings and sub-headings using Markdown formatting with **double asterisks**. End questions with a question mark (?). Include at least one paragraph specifically focusing on {section_keywords}. 
+
+		Use markdown formatting.
+		"""
+		heading['section_content'] = openai_response(prompt=prompt)
+
+	print(outline)
+	return outline
+
+	# prompt = f"""
+	# Using markdown formatting, act as an Expert Article Writer and write a fully detailed, long-form, 100% unique, creative, and human-like article of a minimum of 5000 words using headings and sub-headings. The article should be written in a formal, informative, and optimistic tone
+	# Must Develop a comprehensive "Outline" for a long-form article for the Keyword {keyword}, featuring at least 25 engaging headings and subheadings that are detailed, mutually exclusive, collectively exhaustive, and cover the entire topic. Must use LSI Keywords in these outlines. Must show these "Outlines" in a table.
+	# Use English for the keyword "{keyword}" and write at least 400–500 words of engaging content under every Heading. This article should show the experience, expertise, authority and trust for the Topic {keyword}. Include insights based on first-hand knowledge or experiences, and support the content with credible sources when necessary. Focus on providing accurate, relevant, and helpful information to readers, showcasing both subject matter expertise and personal experience in the topic {keyword}.
+	# Try to use contractions, idioms, transitional phrases, interjections, dangling modifiers, and colloquialisms, and avoid repetitive phrases and unnatural sentence structures.
+	# When you write, you must correctly format the blog post according to proper SEO standards, with as much rich and detailed HTML as possible, for example, lists, bold, italics, quotes from the internet, tables, and external links to high-quality websites such as Wikipedia. Try to ask questions and then immediately give a good and concise answer, to try to achieve the featured snippet on Google.
+	# Also, use the seed keyword as the first H2. Always use a combination of paragraphs, lists, and tables for a better reader experience. Use fully detailed paragraphs that engage the reader. Write at least one paragraph with the heading {keyword}. Write down at least six FAQs with answers and a conclusion.
+	# Note: Don't assign Numbers to Headings. Don't assign numbers to Questions. Don't write Q: before the question (faqs)
+	# Make sure the article is plagiarism free. Don't forget to use a question mark (?) at the end of questions. Try not to change the original {keyword} while writing the title. Try to use "{keyword}" 2-3 times in the article. Try to include {keyword} in the headings as well. Write content that can easily pass the AI detection tools test. Bold all the headings and sub-headings using Markdown formatting. Use **double asterisks** to create bold text to highlight important phrases and entities.
+	# """
 	content = openai_response(prompt=prompt, model="gpt-3.5-turbo-16k", is_json=False)
 	print("Post content generated", content)
 
