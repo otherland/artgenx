@@ -101,11 +101,36 @@ def generate(topic, subject, post_destination, serp_results_dir, image_directory
 	serp_headings = '\n'.join(random.sample(get_unique_strings(serp_headings, threshold=0.7), 100))
 
 	openai.api_key = settings.OPENAI_API_KEY
-	prompt = "For content based on the topic " + topic + """, Use the H1 provided in the system prompt. If not, write a new H1. Use the slug provided in the system prompt. If not, write a new slug.Write an SEO title and an SEO description for this blog post.The SEO title should be no more than 60 characters long.The H1 and the title should be different.The SEO description should be no more than 155 characters long.Use the main keywords for the slug based on the topic of the post. Do not mention the country. Max 3 or 4 keywords, without stop words, and with text normalization and accent stripping. Your response should be in the JSON format based on the following structure: {"h1" : "", "keyword": "", "seoTitle": "", "": "seoDescription": "", "slug": ""}"""
+	prompt = "For content based on the topic " + topic + """, Write an SEO title and an SEO description, H1, and url slug for this blog post. The SEO title should be no more than 60 characters long. The H1 and the title should be different. The SEO description should be no more than 155 characters long. Use the main keywords for the slug based on the topic of the post. Do not mention the country. Max 3 or 4 keywords, without stop words, and with text normalization and accent stripping. Your response should be in the JSON format based on the following structure: {"h1" : "", "keyword": "", "seoTitle": "", "": "seoDescription": "", "slug": ""}"""
 	post = openai_response(prompt=prompt)
+	
 	keyword = post.get("keyword", topic)
+	seoTitle = post.get("seoTitle", topic)
+	# h1_tag = post.get("h1", topic)
+	# seoDescription = post.get("seoDescription", topic)
+	# slug = post.get("slug", topic)
+
 	print("Post front-matter generated", post)
 
+	prompt = f"""Generate a blog post outline based on the relevant headings from the search results for the topic "{topic}" and this data: {post}. Ensure that the outline covers the topic comprehensively, using no more than 10 main headings.
+
+Headings:
+{serp_results}
+
+Use the following json format: {{
+  "headings" : [ {{ "title": "", // Add headings in the form of questions
+    "keywords": ["...", "...", "...", "..."], // Add a list of keywords here to help to generate the final content of this title
+    "headings": [ // Add sub-headings in the form of questions
+      {{ "title": "", "keywords": ["...", "..."] }},
+      {{ "title": "", "keywords": ["...", "..."] }}, 
+    ... ] 
+  }} ... ],
+}}
+    """
+	
+	outline = openai_response(prompt=prompt)
+	print(outline)
+	return
 	prompt = f"""
 	Using markdown formatting, act as an Expert Article Writer and write a fully detailed, long-form, 100% unique, creative, and human-like article of a minimum of 5000 words using headings and sub-headings. The article should be written in a formal, informative, and optimistic tone
 	Must Develop a comprehensive "Outline" for a long-form article for the Keyword {keyword}, featuring at least 25 engaging headings and subheadings that are detailed, mutually exclusive, collectively exhaustive, and cover the entire topic. Must use LSI Keywords in these outlines. Must show these "Outlines" in a table.
