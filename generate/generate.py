@@ -13,8 +13,9 @@ from .embed import json_to_vectorstore
 from .add_images import add_images_to_article
 from django.conf import settings
 import openai
+import time
 
-def openai_response(prompt, retries=3, model="gpt-3.5-turbo", is_json=True):
+def openai_response(prompt, retries=5, model="gpt-3.5-turbo", is_json=True):
 	for _ in range(retries):
 		try:
 			chat_completion = openai.ChatCompletion.create(model=model, messages=[{"role": "user", "content": prompt}])
@@ -53,6 +54,8 @@ def openai_response(prompt, retries=3, model="gpt-3.5-turbo", is_json=True):
 		except openai.error.RateLimitError as e:
 			#Handle rate limit error, e.g. wait or log
 			print(f"OpenAI API request exceeded rate limit: {e}")
+			print('Waiting 10 seconds...')
+			time.sleep(10)
 			continue
 
 	# If retries are exhausted without a valid JSON response, return None
@@ -127,7 +130,7 @@ Use the following json format: {{
   }} ... ],
 }}
     """
-	
+
 	outline = openai_response(prompt=prompt)
 	print(outline)
 	return
