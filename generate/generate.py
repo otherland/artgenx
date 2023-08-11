@@ -136,6 +136,7 @@ Use the following json format: {{
 	outline = openai_response(prompt=prompt)
 	print(outline)
 	print('Expanding outline...')
+	previous_section_content = ""
 	for heading in outline['headings']:
 		section_title = heading['title']
 		section_keywords = heading['keywords']
@@ -156,6 +157,7 @@ Use the following json format: {{
 		Use markdown formatting.
 		"""
 		heading['section_content'] = openai_response(prompt=prompt)
+		previous_section_content = heading['section_content']
 
 	print(outline)
 	return outline
