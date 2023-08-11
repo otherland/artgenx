@@ -158,6 +158,8 @@ Use the following json format: {{
 		"""
 		heading['section_content'] = openai_response(prompt=prompt)
 		previous_section_content = heading['section_content']
+		print('Content generated...')
+		print(heading)
 
 	print(outline)
 	return outline
