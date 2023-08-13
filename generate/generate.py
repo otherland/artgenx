@@ -152,7 +152,14 @@ Use the following json format: {{
 
 		Use a combination of paragraphs, lists, and tables to enhance the reader's experience. Implement proper SEO formatting by using elements like lists, bold text, italics, quotes, and external links. Remember to maintain a formal and optimistic tone throughout the article. Ask thought-provoking questions and provide concise answers to enhance the chances of achieving a featured snippet on search engines.
 
-		Feel free to use contractions, idioms, transitional phrases, and colloquialisms to make the content more engaging. Avoid repetitive phrases and unnatural sentence structures. Bold the headings and sub-headings using Markdown formatting with **double asterisks**. Include at least one paragraph specifically focusing on {section_keywords}. 
+		Feel free to use contractions, idioms, transitional phrases, and colloquialisms to make the content more engaging. Avoid repetitive phrases and unnatural sentence structures. 
+
+		Begin the section with ##"{section_title}". Sub-headings begin with ###.
+
+		Include  at the start of the section.
+
+		Include at least one paragraph specifically focusing on {section_keywords}.
+
 		Do not say 'Introduction' or 'Conclusion'.
 		Use markdown formatting.
 		"""
@@ -161,9 +168,13 @@ Use the following json format: {{
 		print('Content generated...')
 		print(heading)
 
-	print(outline)
-	return outline
-
+	article_sections = []
+	for i in outline['headings']:
+		article_sections.append(f"""{i['section_content']}
+<!--keywords:{", ".join(i['keywords'])}-->
+""")
+	content = '\n\n'.join(article_sections)
+	
 	# prompt = f"""
 	# Using markdown formatting, act as an Expert Article Writer and write a fully detailed, long-form, 100% unique, creative, and human-like article of a minimum of 5000 words using headings and sub-headings. The article should be written in a formal, informative, and optimistic tone
 	# Must Develop a comprehensive "Outline" for a long-form article for the Keyword {keyword}, featuring at least 25 engaging headings and subheadings that are detailed, mutually exclusive, collectively exhaustive, and cover the entire topic. Must use LSI Keywords in these outlines. Must show these "Outlines" in a table.
@@ -174,8 +185,8 @@ Use the following json format: {{
 	# Note: Don't assign Numbers to Headings. Don't assign numbers to Questions. Don't write Q: before the question (faqs)
 	# Make sure the article is plagiarism free. Don't forget to use a question mark (?) at the end of questions. Try not to change the original {keyword} while writing the title. Try to use "{keyword}" 2-3 times in the article. Try to include {keyword} in the headings as well. Write content that can easily pass the AI detection tools test. Bold all the headings and sub-headings using Markdown formatting. Use **double asterisks** to create bold text to highlight important phrases and entities.
 	# """
-	content = openai_response(prompt=prompt, model="gpt-3.5-turbo-16k", is_json=False)
-	print("Post content generated", content)
+	# content = openai_response(prompt=prompt, model="gpt-3.5-turbo-16k", is_json=False)
+	# print("Post content generated", content)
 
 	categories = subject
 	date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
