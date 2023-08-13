@@ -105,7 +105,8 @@ def generate(topic, subject, post_destination, serp_results_dir, image_directory
 				serp_headings.append(heading)
 	print('serp_headings', serp_headings)
 	if serp_headings:
-		serp_headings = '\n'.join(random.sample(get_unique_strings(serp_headings, threshold=0.7), 100))
+		unique_headings = get_unique_strings(serp_headings, threshold=0.7)
+		serp_headings = '\n'.join(random.sample(unique_headings, min(len(unique_headings), 100)))
 
 	openai.api_key = settings.OPENAI_API_KEY
 	prompt = "For content based on the topic " + topic + """, Write an SEO title and an SEO description, H1, and url slug for this blog post. The SEO title should be no more than 60 characters long. The H1 and the title should be different. The SEO description should be no more than 155 characters long. Use the main keywords for the slug based on the topic of the post. Do not mention the country. Max 3 or 4 keywords, without stop words, and with text normalization and accent stripping. Your response should be in the JSON format based on the following structure: {"h1" : "", "keyword": "", "seoTitle": "", "": "seoDescription": "", "slug": ""}"""
