@@ -17,8 +17,11 @@ def process_article_task(self, id):
     except Exception as exc:
         if self.request.retries >= self.retry_kwargs['max_retries']:
             # If the task still fails after max retries, set the flag
-            article.failed_flag = True
-            article.save()
+            try:
+                article.failed_flag = True
+                article.save()
+            except UnboundLocalError:
+                pass
         else:
             # If the task failed but is still retrying, re-raise the exception for retry
             self.retry(exc=exc, countdown=2 ** self.request.retries)
