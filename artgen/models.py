@@ -140,6 +140,10 @@ class Article(models.Model):
 class Competitor(models.Model):
     domain_name = models.CharField(max_length=255)
 
+
+    def __str__(self):
+        return self.domain_name
+
 class Keyword(models.Model):
     competitor = models.ForeignKey(Competitor, on_delete=models.CASCADE)
     keyword = models.CharField(max_length=255)

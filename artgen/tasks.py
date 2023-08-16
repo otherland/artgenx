@@ -91,29 +91,32 @@ def process_csv_files():
                 csv_reader = csv.DictReader(csv_file)
                 for row in csv_reader:
                     # Use get_or_create to prevent duplicates
-                    Keyword.objects.get_or_create(
-                        competitor=competitor,
-                        keyword=row['Keyword'],
-                        defaults={
-                            'position': int(row['Position']),
-                            'previous_position': int(row['Previous position']),
-                            'search_volume': int(row['Search Volume']),
-                            'keyword_difficulty': int(row['Keyword Difficulty']),
-                            'cpc': float(row['CPC']),
-                            'url': row['URL'],
-                            'traffic': int(row['Traffic']),
-                            'traffic_percentage': float(row['Traffic (%)']),
-                            'traffic_cost': float(row['Traffic Cost']),
-                            'competition': float(row['Competition']),
-                            'num_results': int(row['Number of Results']),
-                            'trends': row['Trends'],  # This field might need further processing
-                            'timestamp': row['Timestamp'],  # You might need to parse this into a datetime object
-                            'serp_features': row['SERP Features by Keyword'],
-                            'keyword_intents': row['Keyword Intents'],
-                            'position_type': row['Position Type'],
-                        }
-                    )
-            
+                    try:
+                        Keyword.objects.get_or_create(
+                            competitor=competitor,
+                            keyword=row['Keyword'],
+                            defaults={
+                                'position': int(row['Position']),
+                                'previous_position': int(row['Previous position']),
+                                'search_volume': int(row['Search Volume']),
+                                'keyword_difficulty': int(row['Keyword Difficulty']),
+                                'cpc': float(row['CPC']),
+                                'url': row['URL'],
+                                'traffic': int(row['Traffic']),
+                                'traffic_percentage': float(row['Traffic (%)']),
+                                'traffic_cost': float(row['Traffic Cost']),
+                                'competition': float(row['Competition']),
+                                'num_results': int(row['Number of Results']),
+                                'trends': row['Trends'],  # This field might need further processing
+                                'timestamp': row['Timestamp'],  # You might need to parse this into a datetime object
+                                'serp_features': row['SERP Features by Keyword'],
+                                'keyword_intents': row['Keyword Intents'],
+                                'position_type': row['Position Type'],
+                            }
+                        )
+                    except Exception as e:
+                        print(e)
+                        print(f"Error creating keyword: {row['Keyword']}")
             # Move or delete the CSV file after successful processing
             os.remove(file_path)
 
