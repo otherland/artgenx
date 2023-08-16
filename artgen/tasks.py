@@ -8,6 +8,8 @@ from generate.semrush_reports import run_semrush_automation
 from django.conf import settings
 from django.utils import timezone
 from django.utils.timezone import make_aware  # Import the make_aware function
+from datetime import datetime  # Import the datetime module
+
 
 @shared_task(bind=True, autoretry_for=(Exception,), retry_backoff=True, retry_kwargs={'max_retries': 5})
 def process_article_task(self, id):
@@ -92,7 +94,7 @@ def process_csv_files():
             with open(file_path, 'r') as csv_file:
                 csv_reader = csv.DictReader(csv_file)
                 for row in csv_reader:
-                    timestamp_naive = row['Timestamp']  # Assuming this is a naive datetime
+                    timestamp_naive = datetime.strptime(row['Timestamp'], '%Y-%m-%d')
                     timestamp_aware = make_aware(timestamp_naive)
                     # Use get_or_create to prevent duplicates
                     try:
