@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import Article, Website
+from .models import Article, Website, Competitor, Keyword
 from markdownx.models import MarkdownxField  # Import MarkdownxField
 from markdownx.widgets import MarkdownxWidget  # Import MarkdownxWidget
 
@@ -22,3 +22,5 @@ class WebsiteAdmin(admin.ModelAdmin):
 
 admin.site.register(Website, WebsiteAdmin)    
 admin.site.register(Article, ArticleAdmin)
+admin.site.register(Competitor,)
+admin.site.register(Keyword,)
