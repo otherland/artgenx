@@ -16,9 +16,6 @@
 [submodule "sites/myanswersonaging-website/site"]
 	path = sites/myanswersonaging-website/site
 	url = git@github.com:otherland/myanswersonaging-website.git
-[submodule "sites/vitalmayfair-website/sitegit"]
-	path = sites/vitalmayfair-website/sitegit
-	url = git@github.com:otherland/vitalmayfair-website.git
 [submodule "sites/vitalmayfair-website/site"]
 	path = sites/vitalmayfair-website/site
 	url = git@github.com:otherland/vitalmayfair-website.git
