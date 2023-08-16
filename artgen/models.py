@@ -136,3 +136,33 @@ class Article(models.Model):
 
     def __str__(self):
         return self.query
+
+
+class Competitor(models.Model):
+    domain_name = models.CharField(max_length=255)
+
+class Keyword(models.Model):
+    competitor = models.ForeignKey(Competitor, on_delete=models.CASCADE)
+    keyword = models.CharField(max_length=255)
+    position = models.PositiveIntegerField()
+    previous_position = models.PositiveIntegerField()
+    search_volume = models.PositiveIntegerField()
+    keyword_difficulty = models.PositiveIntegerField()
+    cpc = models.DecimalField(max_digits=10, decimal_places=2)
+    url = models.URLField()
+    traffic = models.PositiveIntegerField()
+    traffic_percentage = models.DecimalField(max_digits=5, decimal_places=2)
+    traffic_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    competition = models.DecimalField(max_digits=5, decimal_places=2)
+    num_results = models.PositiveIntegerField()
+    trends = models.JSONField()  # Store the list of trends
+    timestamp = models.DateTimeField()
+    serp_features = models.TextField()  # Store the list of SERP features
+    keyword_intents = models.CharField(max_length=255)
+    position_type = models.CharField(max_length=255)
+
+    class Meta:
+        unique_together = ('competitor', 'keyword', 'timestamp')
+
+    def __str__(self):
+        return f"{self.keyword} - {self.competitor.domain_name}"
