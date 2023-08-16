@@ -6,6 +6,8 @@ from subprocess import run
 from artgen.models import Competitor, Keyword
 from generate.semrush_reports import run_semrush_automation
 from django.conf import settings
+from django.utils import timezone
+from django.utils.timezone import make_aware  # Import the make_aware function
 
 @shared_task(bind=True, autoretry_for=(Exception,), retry_backoff=True, retry_kwargs={'max_retries': 5})
 def process_article_task(self, id):
@@ -90,6 +92,8 @@ def process_csv_files():
             with open(file_path, 'r') as csv_file:
                 csv_reader = csv.DictReader(csv_file)
                 for row in csv_reader:
+                    timestamp_naive = row['Timestamp']  # Assuming this is a naive datetime
+                    timestamp_aware = make_aware(timestamp_naive)
                     # Use get_or_create to prevent duplicates
                     try:
                         Keyword.objects.get_or_create(
@@ -108,7 +112,7 @@ def process_csv_files():
                                 'competition': float(row['Competition']),
                                 'num_results': int(row['Number of Results']),
                                 'trends': row['Trends'],  # This field might need further processing
-                                'timestamp': row['Timestamp'],  # You might need to parse this into a datetime object
+                                'timestamp': timestamp_aware,  # You might need to parse this into a datetime object
                                 'serp_features': row['SERP Features by Keyword'],
                                 'keyword_intents': row['Keyword Intents'],
                                 'position_type': row['Position Type'],
