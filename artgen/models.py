@@ -157,7 +157,7 @@ class Keyword(models.Model):
     traffic_percentage = models.DecimalField(max_digits=5, decimal_places=2)
     traffic_cost = models.DecimalField(max_digits=10, decimal_places=2)
     competition = models.DecimalField(max_digits=5, decimal_places=2)
-    num_results = models.PositiveIntegerField()
+    num_results = models.BigIntegerField()
     trends = models.JSONField()  # Store the list of trends
     timestamp = models.DateTimeField()
     serp_features = models.TextField()  # Store the list of SERP features
