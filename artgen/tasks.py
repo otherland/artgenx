@@ -119,5 +119,6 @@ def process_csv_files():
                         print(f"Error creating keyword: {row['Keyword']}")
                     finally:
                         # Move or delete the CSV file after successful processing
-                        os.remove(file_path)
+                        # os.remove(file_path)
+                        pass
 
