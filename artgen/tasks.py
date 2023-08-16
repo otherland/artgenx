@@ -4,6 +4,7 @@ from celery import shared_task
 from generate.generate import generate
 from subprocess import run
 from artgen.models import Competitor, Keyword
+from django.db.models import Count
 from generate.semrush_reports import run_semrush_automation
 from django.conf import settings
 from django.utils import timezone
