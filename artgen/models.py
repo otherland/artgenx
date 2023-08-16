@@ -7,7 +7,6 @@ from github import Github, GithubException
 from django.conf import settings
 from django.db import models
 from django.contrib import admin
-from .tasks import process_article_task
 from generate.cloudflare_deploy import deploy_project
 import shutil
 
