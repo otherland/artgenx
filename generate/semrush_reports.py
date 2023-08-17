@@ -4,7 +4,6 @@ import time
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -31,19 +30,10 @@ def run_semrush_automation(websites):
         display = Display(visible=0, size=(1920, 1080))
         display.start()
     
-    chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument("--lang=en")
-    # chrome_options.add_argument("--disable-features=NetworkService")
-    # chrome_options.add_argument("--window-size=1920,1080")
-    # chrome_options.add_argument("--headless")
-    
-    browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
+    service = ChromeService()
+    options = webdriver.ChromeOptions()
+    browser = webdriver.Chrome(service=service, options=options)
 
-    # browser = webdriver.Chrome(
-    #     service=ChromeService(ChromeDriverManager(version='114.0.5735.90').install()),
-    #     options=chrome_options
-    # )
-    
     try:
         print('Logging in...')
         browser.get("https://www.semrush.com/login/")
