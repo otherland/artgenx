@@ -33,7 +33,7 @@ def run_semrush_automation(websites):
     
     service = ChromeService()
     options = webdriver.ChromeOptions()
-    driver = webdriver.Chrome(service=service, options=options)
+    browser = webdriver.Chrome(service=service, options=options)
     # browser = webdriver.Chrome(
     #     service=ChromeService(ChromeDriverManager(version='114.0.5735.90').install()),
     #     options=chrome_options
