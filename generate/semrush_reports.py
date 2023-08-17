@@ -31,10 +31,13 @@ def run_semrush_automation(websites):
         display = Display(visible=0, size=(1920, 1080))
         display.start()
     
-    browser = webdriver.Chrome(
-        service=ChromeService(ChromeDriverManager(version='104.0.5112.101').install()),
-        options=chrome_options
-    )
+    service = ChromeService()
+    options = webdriver.ChromeOptions()
+    driver = webdriver.Chrome(service=service, options=options)
+    # browser = webdriver.Chrome(
+    #     service=ChromeService(ChromeDriverManager(version='114.0.5735.90').install()),
+    #     options=chrome_options
+    # )
     
     try:
         print('Logging in...')
