@@ -4,6 +4,7 @@ import time
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -32,7 +33,8 @@ def run_semrush_automation(websites):
     
     service = ChromeService()
     options = webdriver.ChromeOptions()
-    browser = webdriver.Chrome(service=service, options=options)
+    browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+
 
     try:
         print('Logging in...')
