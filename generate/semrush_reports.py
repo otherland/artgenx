@@ -31,7 +31,7 @@ def run_semrush_automation(websites):
         display = Display(visible=0, size=(1920, 1080))
         display.start()
     
-    service = Service()
+    service = ChromeService()
     options = webdriver.ChromeOptions()
     browser = webdriver.Chrome(service=service, options=options)
     try:
