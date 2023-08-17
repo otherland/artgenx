@@ -8,12 +8,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from django.conf import settings
 
 def enable_download_in_headless_chrome(browser, download_dir):
     browser.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
-    excel_folder = Path.cwd() / "reports"
-    myexcel_folder = str(excel_folder)
-    params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': myexcel_folder}}
+    params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': download_dir}}
     browser.execute("send_command", params)
 
 def run_semrush_automation(websites):
@@ -33,18 +32,24 @@ def run_semrush_automation(websites):
     
     service = ChromeService()
     options = webdriver.ChromeOptions()
+    # options.add_argument("--incognito")
+    # options.add_argument("--lang=en")
+    # options.add_argument("--disable-features=NetworkService")
+    # options.add_argument("--window-size=1920,1080")
     browser = webdriver.Chrome(service=service, options=options)
-    # browser = webdriver.Chrome(
-    #     service=ChromeService(ChromeDriverManager(version='114.0.5735.90').install()),
-    #     options=chrome_options
-    # )
-    
+
+    download_directory = os.path.join(settings.BASE_DIR, 'generate', 'semrush_reports')
+    enable_download_in_headless_chrome(browser, download_directory)
+
     try:
+        print('Loading homepage...')
+        browser.get("https://www.semrush.com")
+        time.sleep(3)
         print('Logging in...')
-        browser.get("https://www.semrush.com/login/")
+        browser.get("https://www.semrush.com/login/?src=header&redirect_to=%2F")
         
         # Accept cookies
-        cookies = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Allow all cookies')]")))
+        cookies = WebDriverWait(browser, 2).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Allow all cookies')]")))
         cookies.click()
         
         print('Inputting login credentials...')
