@@ -79,6 +79,8 @@ def run_sem_rush_for_missing_keywords():
     
     reported_domains = run_semrush_automation(domain_chunks)
 
+    return reported_domains
+
 @shared_task
 def process_csv_files():
     download_directory = os.path.join(settings.BASE_DIR, 'generate', 'semrush_reports')

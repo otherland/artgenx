@@ -32,10 +32,15 @@ def run_semrush_automation(websites):
     
     service = ChromeService()
     options = webdriver.ChromeOptions()
-    # options.add_argument("--incognito")
-    # options.add_argument("--lang=en")
-    # options.add_argument("--disable-features=NetworkService")
-    # options.add_argument("--window-size=1920,1080")
+    options.add_argument("--incognito")
+    options.add_argument("--lang=en")
+    options.add_argument("--disable-features=NetworkService")
+    options.add_argument("--window-size=1920,1080")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--start-maximized")
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option('useAutomationExtension', False)
+
     browser = webdriver.Chrome(service=service, options=options)
 
     download_directory = os.path.join(settings.BASE_DIR, 'generate', 'semrush_reports')
