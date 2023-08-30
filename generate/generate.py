@@ -141,7 +141,10 @@ Use the following json format: {{
 	print('Expanding outline...')
 	previous_section_content = ""
 	for heading in outline['headings']:
-		section_title = heading['title']
+		section_title = heading.get('title', '')
+		if not section_title:
+			print('No section title... continuing')
+			continue
 		section_keywords = heading['keywords']
 	
 		content_prompt = f"""
@@ -194,9 +197,11 @@ Use the following json format: {{
 	categories = subject
 	date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 	filename = f"{post['slug']}-{date.replace(' ', '-').replace(':', '')}.md"
-
+	if not post.get('title'):
+		print('No post title is in the front-matter')
+	title = post.get('title', filename)
 	fileString = f"""---
-	title: "{post['title']}"
+	title: "{title}"
 	date: "{date}"
 	description: "{post['seoDescription']}"
 	categories: {categories}
