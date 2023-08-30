@@ -120,7 +120,7 @@ def generate(topic, subject, post_destination, serp_results_dir, image_directory
 
 	print("Post front-matter generated", post)
 
-	prompt = f"""Generate a blog post outline based on the relevant headings from the search results for the topic "{topic}" and this data: {post}. Ensure that the outline covers the topic comprehensively, using no more than 10 main headings.
+	prompt = f"""Generate a blog post outline based on the relevant headings from the search results for the topic "{topic}" and this data: {post}. Ensure that the outline covers the topic comprehensively, using no more than 2 main headings.
 
 Headings:
 {serp_headings}
