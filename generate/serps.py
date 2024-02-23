@@ -79,7 +79,7 @@ def get_links(query, pages=1):
       "num": 20
     })
     headers = {
-      'X-API-KEY': '9d9825178297e2a64a6ed26f31287e7e26bb548e',
+      'X-API-KEY': '',
       'Content-Type': 'application/json'
     }
     conn.request("POST", "/search", payload, headers)
